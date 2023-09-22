@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_full_course/pages/home_page.dart';
-import 'package:flutter_full_course/pages/login_page.dart';
-import 'package:flutter_full_course/pages/main_page.dart';
+import 'package:flutter_full_course/config/app_routes.dart';
 import 'package:flutter_full_course/style/app_colors.dart';
 
 void main() {
@@ -19,11 +17,7 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: AppColors.background,
           brightness: Brightness.dark),
       initialRoute: '/',
-      routes: {
-        '/': (context) => const LoginPage(),
-        '/home': (context) => HomePage(),
-        '/main': (context) => const MainPage()
-      },
+      routes: AppRoutes.pages,
     );
   }
 }

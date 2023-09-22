@@ -11,8 +11,9 @@ class HomePage extends StatelessWidget {
   Widget build(Object context) {
     mockUsersFromServer();
     return Scaffold(
-        appBar: const ToolBar(
-            title: 'TestFlutters', actions: [Icon(Icons.location_on)]),
+        appBar: ToolBar(title: 'TestFlutters', actions: [
+          IconButton(onPressed: () {}, icon: const Icon(Icons.location_on))
+        ]),
         body: ListView.separated(
             itemBuilder: (context, index) {
               return PostItem(user: users[index]);

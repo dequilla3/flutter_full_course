@@ -47,6 +47,6 @@ class _MainPageState extends State<MainPage> {
     const Center(child: Text('Favorite')),
     const Center(child: Text('Add Post')),
     const Center(child: Text('Message')),
-    ProfilePage(),
+    const ProfilePage(),
   ];
 }

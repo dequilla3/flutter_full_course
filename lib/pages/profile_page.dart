@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter_full_course/components/toolbar.dart';
+import 'package:flutter_full_course/components/user_avatar.dart';
+import 'package:flutter_full_course/config/app_routes.dart';
 import 'package:flutter_full_course/style/app_text.dart';
+
+enum ProfileMenu { edit, logout }
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -8,30 +12,53 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(children: [
-        Image.asset(
-          'assets/temp/janedoe.jpg',
-          width: 90,
-          height: 90,
-        ),
-        const SizedBox(
+      appBar: ToolBar(
+        title: 'Profile',
+        actions: [
+          PopupMenuButton<ProfileMenu>(onSelected: (value) {
+            switch (value) {
+              case ProfileMenu.edit:
+                Navigator.of(context).pushNamed(AppRoutes.editProfilePage);
+                break;
+              case ProfileMenu.logout:
+                print('logout');
+                break;
+              default:
+            }
+          }, itemBuilder: (context) {
+            return [
+              const PopupMenuItem(
+                value: ProfileMenu.edit,
+                child: Row(children: [Icon(Icons.edit), Text('Edit')]),
+              ),
+              const PopupMenuItem(
+                value: ProfileMenu.logout,
+                child: Row(children: [Icon(Icons.logout), Text('Log out')]),
+              ),
+            ];
+          })
+        ],
+      ),
+      body: const Column(children: [
+        UserAvatar(size: 90),
+        SizedBox(
           height: 16,
         ),
-        const Text(
+        Text(
           'Jane Doe',
           style: AppText.header2,
         ),
-        const SizedBox(
+        SizedBox(
           height: 8,
         ),
-        const Text(
+        Text(
           'New York',
           style: AppText.subtitle13,
         ),
-        const SizedBox(
+        SizedBox(
           height: 16,
         ),
-        const Row(
+        Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Column(
@@ -63,7 +90,7 @@ class ProfilePage extends StatelessWidget {
             )
           ],
         ),
-        const Divider(
+        Divider(
           thickness: 1,
           height: 24,
         )

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_full_course/components/app_text_field.dart';
+import 'package:flutter_full_course/config/app_routes.dart';
 import 'package:flutter_full_course/style/app_colors.dart';
 
 class LoginPage extends StatelessWidget {
@@ -30,26 +32,12 @@ class LoginPage extends StatelessWidget {
                 ),
 
                 const Spacer(),
-
-                TextField(
-                  decoration: InputDecoration(
-                      hintText: 'Username',
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12)),
-                      filled: true,
-                      fillColor: Colors.white.withOpacity(0.5)),
-                ),
+                const AppTextField(hint: "Username"),
                 const SizedBox(
                   height: 16,
                 ),
-                TextField(
-                  decoration: InputDecoration(
-                      hintText: 'Password',
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12)),
-                      filled: true,
-                      fillColor: Colors.white.withOpacity(0.5)),
-                ),
+                const AppTextField(hint: "Password"),
+
                 Align(
                   alignment: Alignment.centerRight,
                   child: TextButton(
@@ -69,7 +57,8 @@ class LoginPage extends StatelessWidget {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.of(context).pushReplacementNamed('/main');
+                      Navigator.of(context)
+                          .pushReplacementNamed(AppRoutes.mainPage);
                     },
                     style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.primary,
