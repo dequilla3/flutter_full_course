@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_full_course/components/post_item.dart';
 import 'package:flutter_full_course/components/toolbar.dart';
+import 'package:flutter_full_course/config/app_routes.dart';
 
 // ignore: must_be_immutable
 class HomePage extends StatelessWidget {
@@ -8,11 +9,15 @@ class HomePage extends StatelessWidget {
   List<String> users = [];
 
   @override
-  Widget build(Object context) {
+  Widget build(BuildContext context) {
     mockUsersFromServer();
     return Scaffold(
         appBar: ToolBar(title: 'TestFlutters', actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.location_on))
+          IconButton(
+              onPressed: () {
+                Navigator.of(context).pushNamed(AppRoutes.nearbyPage);
+              },
+              icon: const Icon(Icons.location_on))
         ]),
         body: ListView.separated(
             itemBuilder: (context, index) {
@@ -28,7 +33,7 @@ class HomePage extends StatelessWidget {
   }
 
   mockUsersFromServer() {
-    for (var i = 0; i < 10; i++) {
+    for (var i = 0; i < 2; i++) {
       users.add('User number $i');
     }
   }
