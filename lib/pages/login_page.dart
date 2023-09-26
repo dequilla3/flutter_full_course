@@ -1,13 +1,23 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_full_course/components/app_text_field.dart';
-import 'package:flutter_full_course/config/app_routes.dart';
+import 'package:flutter_full_course/config/app_const.dart';
+import 'package:flutter_full_course/model/user_model.dart';
+import 'package:flutter_full_course/pages/main_page.dart';
 import 'package:flutter_full_course/style/app_colors.dart';
+import 'package:http/http.dart' as http;
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+  LoginPage({super.key});
+
+  final usernameController = TextEditingController();
+  final passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    final navigator = Navigator.of(context);
+
     return Scaffold(
       body: SingleChildScrollView(
         child: SizedBox(
@@ -32,11 +42,14 @@ class LoginPage extends StatelessWidget {
                 ),
 
                 const Spacer(),
-                const AppTextField(hint: "Username"),
+                AppTextField(hint: "Username", controller: usernameController),
                 const SizedBox(
                   height: 16,
                 ),
-                const AppTextField(hint: "Password"),
+                AppTextField(
+                  hint: "Password",
+                  controller: passwordController,
+                ),
 
                 Align(
                   alignment: Alignment.centerRight,
@@ -56,9 +69,15 @@ class LoginPage extends StatelessWidget {
                   height: 48,
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context)
-                          .pushReplacementNamed(AppRoutes.mainPage);
+                    onPressed: () async {
+                      final user = await doLogin();
+                      navigator.push(PageRouteBuilder(
+                        pageBuilder: (context, animation, secondaryAnimation) {
+                          return MainPage(
+                            user: user,
+                          );
+                        },
+                      ));
                     },
                     style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.primary,
@@ -157,5 +176,19 @@ class LoginPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<UserModel> doLogin() async {
+    final loginUrl = Uri.http(AppConst.baseUrl, 'auth/login');
+    var response = await http.post(loginUrl, body: {
+      'username': usernameController.text,
+      'password': passwordController.text
+    });
+
+    if (response.statusCode == 200) {
+      return UserModel.fromJson(jsonDecode(response.body)['user']);
+    } else {
+      throw Exception('You have an error!');
+    }
   }
 }

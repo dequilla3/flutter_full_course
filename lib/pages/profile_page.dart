@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_full_course/components/toolbar.dart';
 import 'package:flutter_full_course/components/user_avatar.dart';
 import 'package:flutter_full_course/config/app_routes.dart';
+import 'package:flutter_full_course/model/user_model.dart';
 import 'package:flutter_full_course/style/app_text.dart';
 
 enum ProfileMenu { edit, logout }
 
 class ProfilePage extends StatelessWidget {
-  const ProfilePage({super.key});
+  const ProfilePage({super.key, required this.user});
+  final UserModel user;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +23,7 @@ class ProfilePage extends StatelessWidget {
                 Navigator.of(context).pushNamed(AppRoutes.editProfilePage);
                 break;
               case ProfileMenu.logout:
-                print('logout');
+                Navigator.of(context).pushNamed(AppRoutes.loginPage);
                 break;
               default:
             }
@@ -39,26 +41,26 @@ class ProfilePage extends StatelessWidget {
           })
         ],
       ),
-      body: const Column(children: [
-        UserAvatar(size: 90),
-        SizedBox(
+      body: Column(children: [
+        const UserAvatar(size: 90),
+        const SizedBox(
           height: 16,
         ),
         Text(
-          'Jane Doe',
+          '${user.firstname} ${user.lastname}',
           style: AppText.header2,
         ),
-        SizedBox(
+        const SizedBox(
           height: 8,
         ),
-        Text(
+        const Text(
           'New York',
           style: AppText.subtitle13,
         ),
-        SizedBox(
+        const SizedBox(
           height: 16,
         ),
-        Row(
+        const Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Column(
@@ -90,7 +92,7 @@ class ProfilePage extends StatelessWidget {
             )
           ],
         ),
-        Divider(
+        const Divider(
           thickness: 1,
           height: 24,
         )

@@ -16,6 +16,11 @@ class EditProfilePage extends StatefulWidget {
 
 class _EditProfilePageState extends State<EditProfilePage> {
   var gender = Gender.none;
+  final fnameController = TextEditingController();
+  final lnameController = TextEditingController();
+  final phoneController = TextEditingController();
+  final locationController = TextEditingController();
+  final bdayController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -53,23 +58,23 @@ class _EditProfilePageState extends State<EditProfilePage> {
               const SizedBox(
                 height: 32,
               ),
-              const AppTextField(hint: 'First Name'),
+              AppTextField(hint: 'First Name', controller: fnameController),
               const SizedBox(
                 height: 16,
               ),
-              const AppTextField(hint: 'Last Name'),
+              AppTextField(hint: 'Last Name', controller: lnameController),
               const SizedBox(
                 height: 16,
               ),
-              const AppTextField(hint: 'Phone number'),
+              AppTextField(hint: 'Phone number', controller: phoneController),
               const SizedBox(
                 height: 16,
               ),
-              const AppTextField(hint: 'Location'),
+              AppTextField(hint: 'Location', controller: phoneController),
               const SizedBox(
                 height: 16,
               ),
-              const AppTextField(hint: 'Birthday'),
+              AppTextField(hint: 'Birthday', controller: bdayController),
               const SizedBox(
                 height: 16,
               ),

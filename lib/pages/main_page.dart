@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_full_course/components/bottom_navigation_item.dart';
 import 'package:flutter_full_course/config/app_icons.dart';
+import 'package:flutter_full_course/model/user_model.dart';
 import 'package:flutter_full_course/pages/home_page.dart';
 import 'package:flutter_full_course/pages/profile_page.dart';
 import 'package:flutter_full_course/style/app_colors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class MainPage extends StatefulWidget {
-  const MainPage({super.key});
+  const MainPage({super.key, required this.user});
+  final UserModel user;
 
   @override
   State<MainPage> createState() => _MainPageState();
@@ -19,7 +21,7 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         extendBody: true,
-        body: pages[menus.index],
+        body: pages()[menus.index],
         bottomNavigationBar: MyBottomNavigation(
           onTap: (Menus value) {
             setState(() {
@@ -30,13 +32,15 @@ class _MainPageState extends State<MainPage> {
         ));
   }
 
-  final pages = [
-    HomePage(),
-    const Center(child: Text('Favorite')),
-    const Center(child: Text('Add Post')),
-    const Center(child: Text('Message')),
-    const ProfilePage(),
-  ];
+  pages() => [
+        HomePage(),
+        const Center(child: Text('Favorite')),
+        const Center(child: Text('Add Post')),
+        const Center(child: Text('Message')),
+        ProfilePage(
+          user: widget.user,
+        ),
+      ];
 }
 
 enum Menus { home, favorite, add, messages, user }

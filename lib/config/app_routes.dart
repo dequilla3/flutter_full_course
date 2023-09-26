@@ -1,6 +1,6 @@
+import 'package:flutter_full_course/pages/edit_profile_page.dart';
 import 'package:flutter_full_course/pages/home_page.dart';
 import 'package:flutter_full_course/pages/login_page.dart';
-import 'package:flutter_full_course/pages/main_page.dart';
 import 'package:flutter_full_course/pages/nearby_page.dart';
 
 class AppRoutes {
@@ -11,9 +11,9 @@ class AppRoutes {
   static const nearbyPage = '/nearby_page';
 
   static final pages = {
-    loginPage: (context) => const LoginPage(),
+    loginPage: (context) => LoginPage(),
     homePage: (context) => HomePage(),
-    mainPage: (context) => const MainPage(),
+    editProfilePage: (context) => const EditProfilePage(),
     nearbyPage: (context) => const NearByPage(),
   };
 }

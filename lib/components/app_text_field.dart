@@ -3,11 +3,13 @@ import 'package:flutter_full_course/style/app_colors.dart';
 
 class AppTextField extends StatelessWidget {
   final String hint;
-  const AppTextField({super.key, required this.hint});
+  final TextEditingController controller;
+  const AppTextField({super.key, required this.hint, required this.controller});
 
   @override
   Widget build(Object context) {
     return TextField(
+      controller: controller,
       decoration: InputDecoration(
           hintText: hint,
           labelText: hint,
