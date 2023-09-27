@@ -2,17 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_full_course/components/toolbar.dart';
 import 'package:flutter_full_course/components/user_avatar.dart';
 import 'package:flutter_full_course/config/app_routes.dart';
-import 'package:flutter_full_course/model/user_model.dart';
+import 'package:flutter_full_course/provider/app_repo.dart';
 import 'package:flutter_full_course/style/app_text.dart';
+import 'package:provider/provider.dart';
 
 enum ProfileMenu { edit, logout }
 
 class ProfilePage extends StatelessWidget {
-  const ProfilePage({super.key, required this.user});
-  final UserModel user;
+  const ProfilePage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<AppRepo>(context).user;
+
     return Scaffold(
       appBar: ToolBar(
         title: 'Profile',
@@ -47,7 +49,7 @@ class ProfilePage extends StatelessWidget {
           height: 16,
         ),
         Text(
-          '${user.firstname} ${user.lastname}',
+          '${user?.firstname} ${user?.lastname}',
           style: AppText.header2,
         ),
         const SizedBox(
