@@ -1,6 +1,7 @@
 import 'package:flutter_full_course/pages/edit_profile_page.dart';
 import 'package:flutter_full_course/pages/home_page.dart';
 import 'package:flutter_full_course/pages/login_page.dart';
+import 'package:flutter_full_course/pages/main_page.dart';
 import 'package:flutter_full_course/pages/nearby_page.dart';
 import 'package:flutter_full_course/provider/login_provider.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +18,8 @@ class AppRoutes {
           create: (context) => LoginProvider(),
           child: LoginPage(),
         ),
-    homePage: (context) => HomePage(),
+    mainPage: (context) => const MainPage(),
+    homePage: (context) => const HomePage(),
     editProfilePage: (context) => const EditProfilePage(),
     nearbyPage: (context) => const NearByPage(),
   };

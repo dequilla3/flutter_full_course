@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_full_course/components/bottom_navigation_item.dart';
+import 'package:flutter_full_course/components/new_post_modal.dart';
 import 'package:flutter_full_course/config/app_icons.dart';
 import 'package:flutter_full_course/pages/home_page.dart';
 import 'package:flutter_full_course/pages/profile_page.dart';
@@ -18,10 +19,21 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        extendBody: true,
+        // extendBody: true,
         body: pages()[menus.index],
         bottomNavigationBar: MyBottomNavigation(
           onTap: (Menus value) {
+            if (value == Menus.add) {
+              showModalBottomSheet(
+                backgroundColor: Colors.transparent,
+                isScrollControlled: true,
+                context: context,
+                builder: (context) {
+                  return NewPostModal();
+                },
+              );
+              return;
+            }
             setState(() {
               menus = value;
             });
@@ -31,7 +43,7 @@ class _MainPageState extends State<MainPage> {
   }
 
   pages() => [
-        HomePage(),
+        const HomePage(),
         const Center(child: Text('Favorite')),
         const Center(child: Text('Add Post')),
         const Center(child: Text('Message')),

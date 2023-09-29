@@ -1,4 +1,4 @@
-import 'package:flutter_full_course/model/user_model.dart';
+import 'package:flutter_full_course/data/model/user_model.dart';
 
 class Post {
   final int? id;
@@ -12,7 +12,7 @@ class Post {
   factory Post.fromJson(Map<String, dynamic> json) => Post(
       json['id'],
       json['message'],
-      json['id'] == null ? null : UserModel.fromJson(json['ownder']),
+      json['id'] == null ? null : UserModel.fromJson(json['user']),
       json['date'] == null ? null : DateTime.parse(json['date']),
       json['image']);
 }

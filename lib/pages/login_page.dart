@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_full_course/components/app_text_field.dart';
-import 'package:flutter_full_course/pages/main_page.dart';
+import 'package:flutter_full_course/config/app_routes.dart';
 import 'package:flutter_full_course/provider/app_repo.dart';
 import 'package:flutter_full_course/provider/login_provider.dart';
 import 'package:flutter_full_course/style/app_colors.dart';
@@ -75,15 +75,9 @@ class LoginPage extends StatelessWidget {
                       loginProvider.login().then((value) {
                         appRepo.user = value.user;
                         appRepo.token = value.token;
-
-                        Navigator.of(context).push(PageRouteBuilder(
-                          pageBuilder:
-                              (context, animation, secondaryAnimation) =>
-                                  const MainPage(),
-                        ));
-                      }, onError: (err) {
-                        print(err);
-                      });
+                        Navigator.of(context)
+                            .pushReplacementNamed(AppRoutes.mainPage);
+                      }, onError: (err) {});
                     },
                     style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.primary,

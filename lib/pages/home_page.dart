@@ -2,15 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_full_course/components/post_item.dart';
 import 'package:flutter_full_course/components/toolbar.dart';
 import 'package:flutter_full_course/config/app_routes.dart';
+import 'package:flutter_full_course/provider/post_provider.dart';
+import 'package:provider/provider.dart';
 
 // ignore: must_be_immutable
-class HomePage extends StatelessWidget {
-  HomePage({super.key});
-  List<String> users = [];
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<PostProvider>().getPost();
+  }
 
   @override
   Widget build(BuildContext context) {
-    mockUsersFromServer();
     return Scaffold(
         appBar: ToolBar(title: 'TestFlutters', actions: [
           IconButton(
@@ -19,22 +30,22 @@ class HomePage extends StatelessWidget {
               },
               icon: const Icon(Icons.location_on))
         ]),
-        body: ListView.separated(
-            itemBuilder: (context, index) {
-              return PostItem(user: users[index]);
-            },
-            separatorBuilder: (BuildContext context, int index) {
-              return const Divider(
-                thickness: 1,
-                height: 24,
-              );
-            },
-            itemCount: users.length));
-  }
-
-  mockUsersFromServer() {
-    for (var i = 0; i < 2; i++) {
-      users.add('User number $i');
-    }
+        body: Consumer<PostProvider>(
+          builder: (context, value, child) {
+            return ListView.separated(
+                itemBuilder: (context, index) {
+                  return PostItem(
+                    post: value.list[index],
+                  );
+                },
+                separatorBuilder: (BuildContext context, int index) {
+                  return const Divider(
+                    thickness: 1,
+                    height: 24,
+                  );
+                },
+                itemCount: value.list.length);
+          },
+        ));
   }
 }
