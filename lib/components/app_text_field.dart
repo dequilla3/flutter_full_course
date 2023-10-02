@@ -3,12 +3,15 @@ import 'package:flutter_full_course/style/app_colors.dart';
 
 class AppTextField extends StatelessWidget {
   final String hint;
-  final TextEditingController controller;
-  const AppTextField({super.key, required this.hint, required this.controller});
+  final TextEditingController? controller;
+  final ValueChanged<String>? onChange;
+  const AppTextField(
+      {super.key, required this.hint, this.controller, this.onChange});
 
   @override
   Widget build(Object context) {
     return TextField(
+      onChanged: onChange,
       controller: controller,
       decoration: InputDecoration(
           hintText: hint,

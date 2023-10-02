@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_full_course/components/post_item.dart';
 import 'package:flutter_full_course/components/toolbar.dart';
 import 'package:flutter_full_course/config/app_routes.dart';
+import 'package:flutter_full_course/provider/app_repo.dart';
 import 'package:flutter_full_course/provider/post_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -17,7 +18,9 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    context.read<PostProvider>().getPost();
+    final postProvider = context.read<PostProvider>();
+    postProvider.setToken(context.read<AppRepo>().token);
+    postProvider.getPost();
   }
 
   @override

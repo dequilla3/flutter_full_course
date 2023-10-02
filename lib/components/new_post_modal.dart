@@ -1,11 +1,16 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_full_course/components/app_text_field.dart';
+import 'package:flutter_full_course/provider/app_repo.dart';
+import 'package:flutter_full_course/provider/post_provider.dart';
 import 'package:flutter_full_course/style/app_colors.dart';
 import 'package:flutter_full_course/style/app_text.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
 class NewPostModal extends StatelessWidget {
-  NewPostModal({super.key});
-  final msgController = TextEditingController();
+  const NewPostModal({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,22 +32,39 @@ class NewPostModal extends StatelessWidget {
           const SizedBox(
             height: 16,
           ),
-          AppTextField(hint: 'Message', controller: msgController),
+          AppTextField(
+            hint: 'Message',
+            onChange: (value) {
+              context.read<PostProvider>().message = value;
+            },
+          ),
           const SizedBox(
             height: 16,
           ),
-          Container(
-            decoration: BoxDecoration(
-                border: Border.all(
-                  color: Colors.white,
-                  width: 2,
+          Consumer<PostProvider>(
+            builder: (context, value, child) {
+              return GestureDetector(
+                onTap: () {
+                  context.read<PostProvider>().pickImage(ImageSource.gallery);
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.white,
+                        width: 2,
+                      ),
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(16))),
+                  width: 200,
+                  height: 200,
+                  child: value.imagePath == null || value.imagePath == ''
+                      ? const Center(
+                          child: Text('Upload from gallery'),
+                        )
+                      : Image.file(File(value.imagePath!)),
                 ),
-                borderRadius: const BorderRadius.all(Radius.circular(16))),
-            width: 200,
-            height: 200,
-            child: const Center(
-              child: Text('Upload from gallery'),
-            ),
+              );
+            },
           ),
           const SizedBox(
             height: 16,
@@ -56,7 +78,16 @@ class NewPostModal extends StatelessWidget {
             height: 16,
           ),
           ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              final token = context.read<AppRepo>().token!;
+              final user = context.read<AppRepo>().user!;
+              context
+                  .read<PostProvider>()
+                  .createPost(token, user)
+                  .then((value) {
+                Navigator.of(context).pop();
+              });
+            },
             style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.primary,
                 foregroundColor: Colors.black),
