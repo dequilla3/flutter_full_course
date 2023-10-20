@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_full_course/components/app_text_field.dart';
 import 'package:flutter_full_course/config/app_routes.dart';
@@ -6,14 +8,74 @@ import 'package:flutter_full_course/provider/login_provider.dart';
 import 'package:flutter_full_course/style/app_colors.dart';
 import 'package:provider/provider.dart';
 
-class LoginPage extends StatelessWidget {
-  LoginPage({super.key});
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
 
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
+  final focusUserName = FocusNode();
+  final focusPassword = FocusNode();
+
+  bool _isLoading = false;
+  String _errMsg = "";
+
+  void _startLoading() async {
+    setState(() {
+      _isLoading = true;
+    });
+  }
+
+  void _stopLoading() async {
+    setState(() {
+      _isLoading = false;
+    });
+  }
+
+  void _showErr(String err) async {
+    setState(() {
+      _errMsg = err;
+    });
+
+    Future.delayed(const Duration(seconds: 3), () {
+      setState(() {
+        _errMsg = '';
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    void doLogin() {
+      final loginProvider = context.read<LoginProvider>();
+      final appRepo = context.read<AppRepo>();
+
+      focusUserName.unfocus();
+      focusPassword.unfocus();
+
+      loginProvider.username = usernameController.text;
+      loginProvider.password = passwordController.text;
+
+      _startLoading();
+
+      Future.delayed(const Duration(seconds: 2), () {
+        loginProvider.login().then((value) {
+          _stopLoading();
+          appRepo.user = value.user;
+          appRepo.token = value.token;
+          Navigator.of(context).pushReplacementNamed(AppRoutes.mainPage);
+        }, onError: (err) {
+          _showErr(err.toString());
+          _stopLoading();
+          passwordController.clear();
+        });
+      });
+    }
+
     return Scaffold(
       body: SingleChildScrollView(
         child: SizedBox(
@@ -31,20 +93,34 @@ class LoginPage extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                const SizedBox(height: 12),
+                const SizedBox(height: 10),
                 const Text(
                   'Login to continue',
                   style: TextStyle(color: Colors.white),
                 ),
 
                 const Spacer(),
-                AppTextField(hint: "Username", controller: usernameController),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    _errMsg.replaceAll('Exception:', ''),
+                    style: const TextStyle(
+                        color: Colors.red, fontWeight: FontWeight.w800),
+                  ),
+                ),
+                AppTextField(
+                  hint: "Username",
+                  controller: usernameController,
+                  focusNode: focusUserName,
+                ),
                 const SizedBox(
                   height: 16,
                 ),
                 AppTextField(
                   hint: "Password",
                   controller: passwordController,
+                  isObscureText: true,
+                  focusNode: focusPassword,
                 ),
 
                 Align(
@@ -56,33 +132,32 @@ class LoginPage extends StatelessWidget {
                       child: const Text('Forgot password?')),
                 ),
 
-                const SizedBox(
-                  height: 32,
-                ),
+                // const Spacer(),
 
                 // LOGIN BUTTON
                 SizedBox(
-                  height: 48,
+                  height: 40,
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
-                      final loginProvider = context.read<LoginProvider>();
-                      final appRepo = context.read<AppRepo>();
-
-                      loginProvider.username = usernameController.text;
-                      loginProvider.password = passwordController.text;
-
-                      loginProvider.login().then((value) {
-                        appRepo.user = value.user;
-                        appRepo.token = value.token;
-                        Navigator.of(context)
-                            .pushReplacementNamed(AppRoutes.mainPage);
-                      }, onError: (err) {});
+                      doLogin();
                     },
                     style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.primary,
                         foregroundColor: Colors.black),
-                    child: const Text('Login'),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text('Login'),
+                        const SizedBox(width: 8),
+                        SizedBox(
+                            height: 20,
+                            width: 20,
+                            child: _isLoading
+                                ? const CircularProgressIndicator()
+                                : const SizedBox())
+                      ],
+                    ),
                   ),
                 ),
 
@@ -98,7 +173,7 @@ class LoginPage extends StatelessWidget {
                 ),
 
                 SizedBox(
-                  height: 48,
+                  height: 40,
                   child: ElevatedButton(
                       onPressed: () {},
                       style: ElevatedButton.styleFrom(
@@ -125,7 +200,7 @@ class LoginPage extends StatelessWidget {
                   height: 8,
                 ),
                 SizedBox(
-                  height: 48,
+                  height: 40,
                   child: ElevatedButton(
                       onPressed: () {},
                       style: ElevatedButton.styleFrom(

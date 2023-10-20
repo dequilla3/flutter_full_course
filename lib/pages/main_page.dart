@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_full_course/components/bottom_navigation_item.dart';
 import 'package:flutter_full_course/components/new_post_modal.dart';
 import 'package:flutter_full_course/config/app_icons.dart';
+import 'package:flutter_full_course/config/app_routes.dart';
+import 'package:flutter_full_course/pages/chat_page.dart';
 import 'package:flutter_full_course/pages/home_page.dart';
 import 'package:flutter_full_course/pages/profile_page.dart';
 import 'package:flutter_full_course/style/app_colors.dart';
@@ -16,6 +18,7 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   Menus menus = Menus.home;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,9 +32,14 @@ class _MainPageState extends State<MainPage> {
                 isScrollControlled: true,
                 context: context,
                 builder: (context) {
-                  return NewPostModal();
+                  return const NewPostModal();
                 },
               );
+              return;
+            }
+
+            if (value == Menus.messages) {
+              Navigator.of(context).pushNamed(AppRoutes.message);
               return;
             }
             setState(() {
@@ -46,7 +54,7 @@ class _MainPageState extends State<MainPage> {
         const HomePage(),
         const Center(child: Text('Favorite')),
         const Center(child: Text('Add Post')),
-        const Center(child: Text('Message')),
+        const ChatPage(),
         const ProfilePage(),
       ];
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_full_course/config/app_config.dart';
 import 'package:flutter_full_course/data/model/post.dart';
-import 'package:flutter_full_course/style/app_colors.dart';
 import 'package:flutter_full_course/style/app_text.dart';
 
 class PostItem extends StatelessWidget {
@@ -42,15 +41,9 @@ class PostItem extends StatelessWidget {
           const SizedBox(
             height: 8,
           ),
-          Container(
-              width: 400,
-              decoration: BoxDecoration(
-                color: AppColors.primary.withOpacity(0.3),
-                // border: Border.all(width: 8, color: Colors.blue.shade500),
-              ),
-              child: post.image != ""
-                  ? Image.network('${AppConfig.baseUrl}${post.image}')
-                  : const SizedBox()),
+          post.image != ""
+              ? Image.network('${AppConfig.baseUrl}${post.image}')
+              : const SizedBox(),
           const SizedBox(
             height: 8,
           ),

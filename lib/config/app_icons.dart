@@ -4,4 +4,5 @@ class AppIcons {
   static const add = 'assets/svg/ic_add.svg';
   static const chat = 'assets/svg/ic_chat.svg';
   static const profile = 'assets/svg/ic_profile.svg';
+  static const plane = 'assets/svg/ic_paper_plane.svg';
 }

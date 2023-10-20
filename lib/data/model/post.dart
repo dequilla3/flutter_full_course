@@ -1,7 +1,7 @@
 import 'package:flutter_full_course/data/model/user_model.dart';
 
 class Post {
-  final int? id;
+  final int id;
   final String? message;
   final UserModel? owner;
   final DateTime? date;

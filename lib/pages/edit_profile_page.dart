@@ -24,6 +24,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double fontSizePerScreenW = width > 400 ? 12 : 10;
     return Scaffold(
       appBar: const ToolBar(title: "Edit Profile"),
       body: SingleChildScrollView(
@@ -80,9 +82,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
               ),
               Container(
                 padding: const EdgeInsets.only(left: 12, top: 6, right: 12),
-                decoration: BoxDecoration(
-                    color: AppColors.fieldColor,
-                    borderRadius: const BorderRadius.all(Radius.circular(12))),
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(8)),
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -98,7 +100,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                   horizontal: VisualDensity.minimumDensity,
                                   vertical: VisualDensity.minimumDensity),
                               contentPadding: EdgeInsets.zero,
-                              title: const Text('Male'),
+                              title: Text(
+                                'Male',
+                                style: TextStyle(fontSize: fontSizePerScreenW),
+                              ),
                               value: Gender.male,
                               groupValue: gender,
                               onChanged: (value) {
@@ -113,7 +118,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                   horizontal: VisualDensity.minimumDensity,
                                   vertical: VisualDensity.minimumDensity),
                               contentPadding: EdgeInsets.zero,
-                              title: const Text('Female'),
+                              title: Text(
+                                'Female',
+                                style: TextStyle(fontSize: fontSizePerScreenW),
+                              ),
                               value: Gender.female,
                               groupValue: gender,
                               onChanged: (value) {
@@ -128,7 +136,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                   horizontal: VisualDensity.minimumDensity,
                                   vertical: VisualDensity.minimumDensity),
                               contentPadding: EdgeInsets.zero,
-                              title: const Text('Others'),
+                              title: Text(
+                                'Others',
+                                style: TextStyle(fontSize: fontSizePerScreenW),
+                              ),
                               value: Gender.others,
                               groupValue: gender,
                               onChanged: (value) {
