@@ -18,7 +18,9 @@ class ChatPage extends StatelessWidget {
     final msgController = TextEditingController();
 
     return Scaffold(
-      appBar: const ToolBar(title: 'Chat'),
+      appBar: ToolBar(
+          title:
+              '${provider.selectedUserToChat?.firstname} ${provider.selectedUserToChat?.lastname}'),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

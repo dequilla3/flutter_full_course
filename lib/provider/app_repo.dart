@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_full_course/data/model/chat.dart';
 import 'package:flutter_full_course/data/model/user_model.dart';
+import 'package:flutter_full_course/data/services/get_user_service.dart';
 import 'package:flutter_full_course/data/services/socket_service.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
@@ -8,7 +9,9 @@ class AppRepo extends ChangeNotifier {
   String? _token;
   UserModel? user;
   List<Chat> chats = [];
+  List<UserModel> users = [];
   IO.Socket? socket;
+  UserModel? selectedUserToChat;
 
   set token(String? value) {
     _token = value;
@@ -31,5 +34,10 @@ class AppRepo extends ChangeNotifier {
       final msg = {'usrId': user?.id, 'msg': message};
       socket?.emit('newMessage', msg);
     }
+  }
+
+  getUsers() async {
+    users = await GetUserService(token).call();
+    notifyListeners();
   }
 }

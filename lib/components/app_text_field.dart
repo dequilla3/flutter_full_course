@@ -18,9 +18,10 @@ class AppTextField extends StatelessWidget {
       this.maxLines});
 
   @override
-  Widget build(Object context) {
+  Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
     return SizedBox(
-      height: 40,
+      height: height < 800 ? 40 : 48,
       child: TextField(
         style: const TextStyle(fontSize: 14),
         obscureText: isObscureText,

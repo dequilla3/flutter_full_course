@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_full_course/components/bottom_navigation_item.dart';
 import 'package:flutter_full_course/components/new_post_modal.dart';
 import 'package:flutter_full_course/config/app_icons.dart';
-import 'package:flutter_full_course/config/app_routes.dart';
-import 'package:flutter_full_course/pages/chat_page.dart';
+import 'package:flutter_full_course/pages/chat/chat_home_page.dart';
 import 'package:flutter_full_course/pages/home_page.dart';
 import 'package:flutter_full_course/pages/profile_page.dart';
 import 'package:flutter_full_course/style/app_colors.dart';
@@ -37,11 +36,6 @@ class _MainPageState extends State<MainPage> {
               );
               return;
             }
-
-            if (value == Menus.messages) {
-              Navigator.of(context).pushNamed(AppRoutes.message);
-              return;
-            }
             setState(() {
               menus = value;
             });
@@ -54,7 +48,7 @@ class _MainPageState extends State<MainPage> {
         const HomePage(),
         const Center(child: Text('Favorite')),
         const Center(child: Text('Add Post')),
-        const ChatPage(),
+        const ChatHomePage(),
         const ProfilePage(),
       ];
 }

@@ -10,6 +10,7 @@ class LoginService extends ServiceBase<LoginResponse> {
   final String password;
   LoginService({required this.username, required this.password});
 
+  @override
   Future<LoginResponse> call() async {
     final result =
         await http.post(Uri.parse('${AppConfig.baseUrl}/auth/login'), body: {

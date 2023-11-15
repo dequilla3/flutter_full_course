@@ -12,7 +12,7 @@ class NearByPage extends StatelessWidget {
       appBar: const ToolBar(title: 'Nearby'),
       body: FlutterMap(
         options: MapOptions(
-          center: LatLng(51.509364, -0.128928),
+          center: const LatLng(51.509364, -0.128928),
           zoom: 9.2,
         ),
         nonRotatedChildren: [
