@@ -36,16 +36,17 @@ class PostProvider extends ChangeNotifier {
 
   // O(n2)
   getPost() async {
-    List<Post> dummyPost = await GetPostService(token).call();
-    List<int> curPostIds = [];
+    List<Post> posts = await GetPostService(token).call();
+    List<int> postIds = [];
 
-    for (var post in list) {
-      curPostIds.add(post.id);
+    //Store current ids
+    for (var postFeed in list) {
+      postIds.add(postFeed.id);
     }
 
-    for (var dPost in dummyPost) {
-      if (!curPostIds.contains(dPost.id)) {
-        list.add(dPost);
+    for (var post in posts) {
+      if (!postIds.contains(post.id)) {
+        list.add(post);
       }
     }
     notifyListeners();

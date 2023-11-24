@@ -15,7 +15,7 @@ class ChatHomePage extends StatelessWidget {
             },
             icon: const Icon(Icons.search))
       ]),
-      body: Text('Chats'),
+      body: const Text('Chats'),
     );
   }
 }
