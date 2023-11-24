@@ -1,16 +1,7 @@
-# flutter_full_course
+# Social Media Demo Project
+* Used socket.io for chat feature.
+* Implemented a good practices in codebase such as naming convention, file structure etc...
+* Used provider for state management
+  
+![image](https://github.com/dequilla3/social_media_demo/assets/67781364/6464d6b7-96a8-4370-9dba-35a2705572ef)
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
